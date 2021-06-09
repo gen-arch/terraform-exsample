@@ -1,0 +1,46 @@
+osPolicies:
+  - id: setup-repo-and-install-package-policy
+    mode: ENFORCEMENT
+    resourceGroups:
+      - osFilter:
+          osShortName: ubuntu
+        resources:
+          - id: setup-repo-google-cloud-logging
+            repository:
+              apt:
+                archiveType: DEB
+                uri: https://packages.cloud.google.com/apt
+                distribution: google-cloud-logging-focal
+                components:
+                  - main
+                gpgKey: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+          - id: setup-repo-google-cloud-monitoring
+            repository:
+              apt:
+                archiveType: DEB
+                uri: https://packages.cloud.google.com/apt
+                distribution: google-cloud-monitoring-focal
+                components:
+                  - main
+                gpgKey: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+          - id: install-pkg-stackdriver-agent
+            pkg:
+              desiredState: INSTALLED
+              apt:
+                name: stackdriver-agent
+          - id: install-pkg-google-fluentd
+            pkg:
+              desiredState: INSTALLED
+              apt:
+                name: google-fluentd
+instanceFilter:
+  osShortNames:
+    - ubuntu
+  inclusionLabels:
+    - labels:
+        ospolicy-ubuntu: "true"
+rollout:
+  disruptionBudget:
+    fixed: 10
+  minWaitDuration: 300s
+

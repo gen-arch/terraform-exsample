@@ -1,0 +1,27 @@
+osPolicies:
+  - id: install-package-policy
+    mode: ENFORCEMENT
+    resourceGroups:
+      - osFilter:
+          osShortName: ubuntu
+        resources:
+          - id: install-pkg-docker
+            pkg:
+              desiredState: INSTALLED
+              apt:
+                name: docker.io
+          - id: install-pkg-docker-compose
+            pkg:
+              desiredState: INSTALLED
+              apt:
+                name: docker-compose
+instanceFilter:
+  osShortNames:
+    - ubuntu
+  inclusionLabels:
+    - labels:
+        ospolicy-container: "true"
+rollout:
+  disruptionBudget:
+    fixed: 10
+  minWaitDuration: 300s

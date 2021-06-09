@@ -1,0 +1,63 @@
+#cloud-config
+timezone: Asia/Tokyo
+locale: en_US.UTF-8
+users:
+  - name: toshifum
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: users, sudo
+    uid: 1000
+    shell: /bin/bash
+package_update: true
+package_upgrade: true
+packages:
+  - make
+  - vim
+  - git
+  - lsof
+  - libpam-google-authenticator
+
+write_files:
+ - content: |
+     Include /etc/ssh/sshd_config.d/*.conf
+     Port 22
+     AddressFamily any
+     Protocol 2
+     SyslogFacility AUTH
+     LogLevel INFO
+     MaxStartups 10:15:50
+     HostKey /etc/ssh/ssh_host_rsa_key
+     HostKey /etc/ssh/ssh_host_ecdsa_key
+     HostKey /etc/ssh/ssh_host_ed25519_key
+     TCPKeepAlive yes
+     ClientAliveInterval 120
+     ClientAliveCountMax 3
+     LoginGraceTime 60
+     PermitRootLogin no
+     StrictModes yes
+     MaxAuthTries 3
+     MaxSessions 10
+     PubkeyAuthentication yes
+     AuthorizedKeysFile  .ssh/authorized_keys
+     PermitEmptyPasswords no
+     PasswordAuthentication no
+     ChallengeResponseAuthentication no
+     HostbasedAuthentication no
+     IgnoreRhosts yes
+     KerberosAuthentication no
+     GSSAPIAuthentication no
+     UsePAM yes
+     AllowAgentForwarding no
+     AllowTcpForwarding no
+     GatewayPorts no
+     X11Forwarding no
+     PermitTunnel no
+     PrintMotd no
+     PrintLastLog yes
+     PermitUserEnvironment no
+     Compression yes
+     UseDNS no
+     AcceptEnv LANG LC_*
+   path: /etc/ssh/sshd_config
+   pemissions: '0644'
+   owner: root:root
+

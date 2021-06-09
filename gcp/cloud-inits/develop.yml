@@ -1,0 +1,21 @@
+#cloud-config
+timezone: Asia/Tokyo
+##locale: en_US.UTF-8
+users:
+  - name: toshifum
+    sudo: ALL=(ALL) ALL
+    groups: users, sudo, docker
+    uid: 1000
+    shell: /bin/bash
+packages:
+  - google-osconfig-agent
+package_update: true
+package_upgrade: true
+apt:
+  preserve_sources_list: true
+  sources:
+    google-compute-engine:
+      source: "deb http://packages.cloud.google.com/apt google-compute-engine-focal-stable main"
+      keyid: "59fe0256827269dc81578f928b57c5c2836f4beb"
+      keyserver: "keyserver.ubuntu.com"
+
