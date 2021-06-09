@@ -12,7 +12,7 @@ resource "google_compute_subnetwork" "default" {
 }
 
 resource "google_compute_firewall" "iap" {
-  name          = "allow-ingress-from-iap"
+  name          = "example-allow-ingress-from-iap"
   network       = google_compute_network.default.self_link
   direction     = "INGRESS"
   priority      = 1000

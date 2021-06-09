@@ -1,0 +1,23 @@
+osPolicies:
+  - id: install-package-policy
+    mode: ENFORCEMENT
+    resourceGroups:
+      - osFilter:
+          osShortName: ubuntu
+        resources:
+          - id: install-pkg
+            pkg:
+              desiredState: REMOVED
+              apt:
+                name: nginx
+instanceFilter:
+  osShortNames:
+    - ubuntu
+  inclusionLabels:
+    - labels:
+        ospolicy-test: "true"
+rollout:
+  disruptionBudget:
+    fixed: 10
+  minWaitDuration: 300s
+
