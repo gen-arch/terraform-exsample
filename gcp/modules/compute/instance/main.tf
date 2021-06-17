@@ -13,6 +13,11 @@ resource "google_project_iam_member" "logwriter" {
   member = "serviceAccount:${google_service_account.default.email}"
 }
 
+resource "google_project_iam_member" "storage-admin" {
+  role   = "roles/storage.admin"
+  member = "serviceAccount:${google_service_account.default.email}"
+}
+
 resource "google_compute_instance" "default" {
   name         = var.name
   machine_type = var.machine_type

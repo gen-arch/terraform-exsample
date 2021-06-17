@@ -22,3 +22,19 @@ resource "google_compute_firewall" "iap" {
     ports    = ["22"]
   }
 }
+
+resource "google_compute_firewall" "health-check" {
+  name      = "example-allow-ingress-hc"
+  network   = google_compute_network.default.self_link
+  direction = "INGRESS"
+  priority  = 1001
+  source_ranges = [
+    "35.191.0.0/16",
+    "130.211.0.0/22",
+  ]
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "9292", "8000"]
+  }
+}
+

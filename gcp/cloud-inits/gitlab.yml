@@ -1,0 +1,11 @@
+#cloud-config
+timezone: Asia/Tokyo
+##locale: en_US.UTF-8
+users:
+  - name: toshifum
+    sudo: ALL=(ALL) ALL
+    groups: users, sudo, docker
+    uid: 1000
+    shell: /bin/bash
+package_update: true
+package_upgrade: true
